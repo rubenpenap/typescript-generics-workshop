@@ -2,13 +2,13 @@ import { expect, it } from 'vitest';
 import { Equal, Expect } from '../helpers/type-utils';
 
 const makeSafe =
-	<TParams extends any[], TReturn>(func: (...args: TParams) => TReturn) =>
+	<TFunc extends (...args: any[]) => any>(func: TFunc) =>
 	(
-		...args: TParams
+		...args: Parameters<TFunc>
 	):
 		| {
 				type: 'success';
-				result: TReturn;
+				result: ReturnType<TFunc>;
 		  }
 		| {
 				type: 'failure';
